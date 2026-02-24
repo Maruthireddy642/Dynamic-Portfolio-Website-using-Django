@@ -1,184 +1,336 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>B.Maruthi Reddy | Portfolio</title>
-
+    <title>B.Maruthi Reddy | Developer Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f3f2ef; /* LinkedIn background */
-            color: #1d1d1f;
-        }
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
 
-        /* NAVBAR */
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+<style>
+html { scroll-behavior: smooth; }
 
-        .navbar a {
-            color: #1d1d1f !important;
-            margin-left: 20px;
-            font-weight: 500;
-        }
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: white;
+    overflow-x: hidden;
+}
 
-        /* HERO */
-        .hero {
-            padding: 120px 0;
-            text-align: center;
-        }
+/* INTRO */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+#intro h1 {
+    font-size: 70px;
+    color: white;
+    animation: introReveal 2s ease forwards;
+}
+@keyframes introReveal {
+    from { opacity: 0; letter-spacing: 10px; }
+    to { opacity: 1; letter-spacing: 2px; }
+}
 
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-        }
+/* CINEMA OVERLAY */
+.cinema-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6));
+    pointer-events: none;
+    z-index: 0;
+}
 
-        .typing-text {
-            color: #0a66c2;
-            font-weight: 600;
-        }
+/* HERO */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.hero h1 { font-size: 70px; font-weight: 900; }
 
-        /* Modern Gradient Button */
-        .btn-main {
-            background: linear-gradient(90deg, #0a66c2, #004182);
-            border: none;
-            padding: 10px 25px;
-            border-radius: 6px;
-            color: white;
-            transition: 0.3s;
-        }
+/* ABOUT */
+.about {
+    background: #f5e6d3;
+    color: #111;
+    padding: 140px 20px;
+    text-align: center;
+}
 
-        .btn-main:hover {
-            opacity: 0.9;
-            color: white;
-        }
+/* SKILLS */
+.skills { background: #111827; padding: 140px 20px; }
+.progress {
+    height: 25px;
+    background: #1e293b;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.progress-bar {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    width: 0;
+    transition: width 2s ease;
+    text-align: right;
+    padding-right: 10px;
+    line-height: 25px;
+    font-weight: 600;
+}
 
-        /* Professional Project Card */
-        .card {
-            background-color: white;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: 0.3s ease;
-            height: 100%;
-        }
+/* WHY */
+.why-section {
+    background: #e8dcc9;
+    color: #111;
+    padding: 150px 0;
+}
+.why-title {
+    font-size: 70px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 120px;
+}
+.section-heading {
+    font-size: 40px;
+    font-weight: 900;
+    color: #c64747;
+}
+.section-text { font-size: 18px; max-width: 600px; }
+.why-item { margin-bottom: 200px; }
 
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
+/* PROJECTS */
+.projects { background: #0f172a; padding: 140px 20px; }
+.project-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 15px;
+    transition: 0.4s;
+    height: 100%;
+}
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+}
 
-        .section-title {
-            margin-top: 80px;
-            margin-bottom: 40px;
-            font-weight: 600;
-            text-align: center;
-        }
+/* ROCKET */
+.rocket-wrapper {
+    position: fixed;
+    right: 100px;
+    top: 0;
+    width: 160px;
+    z-index: 999;
+}
+.rocket { width: 100%; transform-origin: center; }
 
-        .footer {
-            margin-top: 80px;
-            padding: 30px 0;
-            text-align: center;
-            background: white;
-            font-size: 14px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-        }
-    </style>
+/* Flame */
+.flame {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 100px;
+    background: radial-gradient(circle at 50% 0%, #ffeb3b, #ff5722);
+    border-radius: 50%;
+    filter: blur(6px);
+    animation: flameFlicker 0.12s infinite alternate;
+    box-shadow: 0 0 25px #ff5722;
+}
+@keyframes flameFlicker {
+    from { transform: translateX(-50%) scaleY(1); opacity: 0.8; }
+    to { transform: translateX(-50%) scaleY(1.5); opacity: 1; }
+}
+
+/* Smoke */
+.smoke {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    width: 60px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5), transparent);
+    filter: blur(15px);
+    opacity: 0.5;
+    animation: smokeMove 1s infinite alternate;
+}
+@keyframes smokeMove {
+    from { transform: translateX(-50%) scale(1); opacity: 0.4; }
+    to { transform: translateX(-50%) scale(1.4); opacity: 0.1; }
+}
+
+/* Path */
+.path-svg {
+    position: fixed;
+    right: 120px;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+}
+</style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Maruthi Reddy</a>
+<div id="intro"><h1>B.Maruthi Reddy</h1></div>
+<div class="cinema-overlay"></div>
 
-        <div>
-            <a href="#projects">Projects</a>
-            <a href="/contact/">Contact</a>
-            <a href="/add-project/" class="btn btn-main btn-sm">Add Project</a>
-            <form action="/logout/" method="POST" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger btn-sm">
-        Logout
-    </button>
-</form>
-        </div>
-    </div>
-</nav>
-
-<!-- HERO SECTION -->
 <section class="hero">
+    <div>
+        <h1>Hi, I'm B.Maruthi Reddy</h1>
+        <p>Software Developer | Django Enthusiast | Machine Learning Learner</p>
+    </div>
+</section>
+
+<section class="about">
     <div class="container">
-        <h1>Hi, I'm <span style="color:#0a66c2;">B.Maruthi Reddy</span> 👋</h1>
-        <p class="mt-3">
-            <span id="typing" class="typing-text"></span>
+        <h1>ABOUT ME</h1>
+        <p class="mt-4">
+            I am a passionate Software Developer focused on Django,
+            Python and building real-world scalable applications.
         </p>
-        <br>
-        <a href="#projects" class="btn btn-main">View Projects</a>
     </div>
 </section>
 
-<!-- PROJECTS SECTION -->
-<section id="projects" class="container">
-    <h2 class="section-title">My Projects</h2>
-
-    <div class="row">
-
-        {% for project in projects %}
-        <div class="col-md-4 mb-4">
-            <div class="card p-4">
-
-                <h5 class="fw-bold">{{ project.title }}</h5>
-                <p class="mt-2">{{ project.description }}</p>
-
-                <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
-
-                <div class="mt-3">
-                    <a href="{{ project.github_link }}" target="_blank" class="btn btn-main btn-sm">GitHub</a>
-
-                    {% if project.live_link %}
-                    <a href="{{ project.live_link }}" target="_blank" class="btn btn-success btn-sm">Live</a>
-                    {% endif %}
-                </div>
-
-            </div>
-        </div>
-        {% empty %}
-        <p class="text-center">No projects added yet.</p>
-        {% endfor %}
-
-    </div>
+<section class="skills">
+<div class="container">
+    <h2 class="mb-5 text-center">My Skills</h2>
+    <p>Python</p>
+    <div class="progress"><div class="progress-bar" data-width="90%">90%</div></div>
+    <p>Django</p>
+    <div class="progress"><div class="progress-bar" data-width="85%">85%</div></div>
+    <p>Machine Learning</p>
+    <div class="progress"><div class="progress-bar" data-width="75%">75%</div></div>
+</div>
 </section>
 
-<!-- FOOTER -->
-<div class="footer">
-    © 2026 B.Maruthi Reddy | Built with Django 🚀
+<section class="why-section">
+<div class="container">
+<h1 class="why-title">WHY WORK WITH ME?</h1>
+<div class="why-item">
+<h2 class="section-heading">01 JACK OF ALL TRADES</h2>
+<p class="section-text">I handle full-stack development, UI design, backend logic and deployment.</p>
+</div>
+<div class="why-item">
+<h2 class="section-heading">02 CMS ONE-MAN ARMY</h2>
+<p class="section-text">From authentication systems to database design and production deployment.</p>
+</div>
+<div class="why-item">
+<h2 class="section-heading">03 GSAP FANATIC</h2>
+<p class="section-text">I love smooth animations and interactive UI experiences.</p>
+</div>
+<div class="why-item">
+<h2 class="section-heading">04 PROBLEM SOLVER AT HEART</h2>
+<p class="section-text">I enjoy solving complex technical challenges efficiently.</p>
+</div>
+</div>
+</section>
+
+<section class="projects">
+<div class="container">
+<h2 class="mb-5 text-center">My Projects</h2>
+<div class="row">
+{% for project in projects %}
+<div class="col-md-4 mb-4">
+<div class="project-card">
+<h5>{{ project.title }}</h5>
+<p>{{ project.description }}</p>
+<p><strong>Tech:</strong> {{ project.tech_stack }}</p>
+<a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-primary">GitHub</a>
+{% if project.live_link %}
+<a href="{{ project.live_link }}" target="_blank" class="btn btn-sm btn-success">Live</a>
+{% endif %}
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+</section>
+
+<div class="rocket-wrapper">
+    <img src="https://cdn-icons-png.flaticon.com/512/3212/3212608.png" class="rocket">
+    <div class="flame"></div>
+    <div class="smoke"></div>
 </div>
 
-<!-- Typing Animation -->
-<script>
-    const text = "Software Developer | Django Enthusiast | Game Developer";
-    let i = 0;
+<svg class="path-svg" viewBox="0 0 300 3000" width="300" height="3000">
+  <path id="motionPath"
+        d="M150 0 Q80 400 150 800 T150 1600 T150 2400"
+        stroke="#555"
+        stroke-width="3"
+        fill="none"
+        stroke-dasharray="15 15"/>
+</svg>
 
-    function typingEffect() {
-        if (i < text.length) {
-            document.getElementById("typing").innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typingEffect, 60);
+<script>
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+window.addEventListener("load", () => {
+    gsap.to("#intro", {
+        opacity: 0,
+        duration: 1.5,
+        delay: 2,
+        onComplete: () => document.getElementById("intro").remove()
+    });
+});
+
+let tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 3
+    }
+});
+
+tl.to(".rocket-wrapper", {
+    motionPath: {
+        path: "#motionPath",
+        align: "#motionPath",
+        autoRotate: true,
+        alignOrigin: [0.5, 0.5]
+    },
+    ease: "none"
+});
+
+gsap.fromTo("#motionPath",
+    { strokeDasharray: 3000, strokeDashoffset: 3000 },
+    {
+        strokeDashoffset: 0,
+        scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 3
         }
     }
+);
 
-    window.onload = typingEffect;
+/* Skills animation */
+window.addEventListener("scroll", ()=>{
+document.querySelectorAll(".progress-bar").forEach(bar=>{
+if(window.scrollY + window.innerHeight > document.querySelector(".skills").offsetTop){
+bar.style.width = bar.getAttribute("data-width");
+}
+});
+});
 </script>
 
 </body>
-</html>
+</html> 
